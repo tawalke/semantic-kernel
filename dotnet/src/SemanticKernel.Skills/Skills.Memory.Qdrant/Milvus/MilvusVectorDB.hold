@@ -1,0 +1,24 @@
+// Copyright (c) Microsoft. All rights reserved.
+
+using System.Collections.Generic;
+using System.Data;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Net.Http;
+
+
+
+namespace Microsoft.SemanticKernel.Skills.Memory.VectorDB;
+
+
+internal class MilvusVectorDB //: IVectorDBClient<TData>
+{
+    public static HttpClient CreateVectorDBConnection(string hostendpoint, int port)
+    {
+        HttpClient MilvusDBClient = new HttpClient();
+        return MilvusDBClient;
+    }
+
+
+}

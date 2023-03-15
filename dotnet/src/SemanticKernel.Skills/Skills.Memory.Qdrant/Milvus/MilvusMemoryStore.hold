@@ -1,0 +1,34 @@
+// Copyright (c) Microsoft. All rights reserved.
+
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.SemanticKernel.Memory.Storage;
+
+namespace Microsoft.SemanticKernel.Skills.Memory.VectorDB;
+
+/// <summary>
+/// An implementation of <see cref="IDataStore{TValue}"/> backed by a Qdrant Vector database.
+/// </summary>
+/// <remarks>The vector data is saved to Qdrant Vector Database run locally or in cloud, specified in the constructor.
+/// The data persists between subsequent instances. </remarks>
+/// <typeparam name="TValue">The type of data to be stored in this data store.</typeparam>
+public class MilvusDataStore<TEmbedding> : IDataStore<IEmbeddingWithMetadata<TEmbedding>>, IMemoryStore<TEmbedding>
+{
+    /// <summary>
+    /// Connect a Milvus Vector database
+    /// </summary>
+    /// <param name="endpoint">IP Address or URL endpoint to Qdrant Vectore Database.</param>
+    /// <param name="port">Port to be used for Qdrant Vector DB</param>
+    public static MilvusDataStore<TValue> ConnectVectorDB(string endpoint, int port)
+    {
+        var vectorDBConnection = MilvusVectorDB.CreateVectorDBConnection(endpoint, port);
+        return new QdrantDataStore<TValue>(vectorDBConnection);
+    }
+}
